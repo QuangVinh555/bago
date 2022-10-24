@@ -1,0 +1,21 @@
+###
+#Register
+POST http://localhost:8081/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "David moye",
+    "email": "davidmoye@gmail.com",
+    "password": "12345678"
+}
+
+###
+#Login
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzQ0MTQ3NzBhYTc1YzM2NDk1MDg2OWQiLCJpYXQiOjE2NjU0MDYwNzF9.285GxrzUOiHZ8jcf7X2OirtQIa746Dt3LxOeEBnBM0g
+
+{
+    "email": "davidmoye@gmail.com",
+    "password": "12345678"
+}

@@ -1,0 +1,198 @@
+.topbarContainer{
+    height: 50px;
+    width: 100%;
+    background-color: #1877f2;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
+}
+
+.topbarLeft{
+    flex: 3;
+}
+
+.topbarLeft .logo{
+    font-size: 24px;
+    margin-left: 20px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
+.topbarCenter{
+    flex: 5;
+}
+
+.topbarCenter .searchbar{
+    width : 100%;
+    height : 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    position: relative;
+}
+
+.topbarCenter .searchbar svg{
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.topbarCenter .searchbar input{
+    width: 70%;
+    border: none;
+}
+
+.topbarCenter .searchbar input:focus{
+    outline: none;
+}
+
+.topbarSearchProfile{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    background-color: #e1dbdb;
+    border-radius: 10px;
+}
+
+.topbarLinkProfile{
+    margin-top: 100px;
+    position: absolute;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+}
+
+.topbarSearchProfile img{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 8px;
+    margin-left: 4px;
+}
+
+.hide{
+    /* display: none; */
+}
+
+.topbarRight{
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #fff;
+}
+
+.topbarLink{
+    margin-right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.topbarIcons{
+    display: flex;
+}
+
+.topbarIconItem{
+    margin-right: 15px;
+    cursor: pointer;
+    position: relative;
+}
+
+.topbarIconBadge{
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    color: #fff;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.topbarImg{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.topbarRightProfile{
+   position: relative;
+}
+
+.topbarRightProfile:hover .topbarRightModal{
+    display: block;
+}
+
+.topbarRightModal{
+    position: absolute;
+    height: 130px;
+    width: 146px;
+    left: -78px;
+    top: 43px;
+    border-radius: 5px;
+    background-color: #ccc;
+    display: none;
+    animation: logOutScale linear 0.3s;
+}
+
+.topbarRightUserModal{
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+    margin-left: 8px;
+    color: black;
+}
+
+.topbarRightUserModal li{
+    border-bottom: 1px solid #333;
+    padding: 8px 0;
+}
+
+.topbarRightUserModal li:hover{
+    opacity: 0.8;
+    
+}
+
+.topbarRightUserModal::before{
+    content: "";
+    display: block;
+    position: absolute;
+    border-width: 17px 27px;
+    border-style: solid;
+    border-color: transparent transparent #ccc transparent;
+    top: -26px;
+    left: 67px;
+}
+
+.topbarRightUserModal::after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 140px;
+    top: -22px;
+    left: 4px;
+    height: 30px;
+    background-color: transparent;
+}
+
+@keyframes logOutScale{
+    from {
+        opacity: 0.6;
+        scale: 0
+    }to{
+        opacity: 1;
+        scale: 1
+    }
+}
