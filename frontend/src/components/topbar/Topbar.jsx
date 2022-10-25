@@ -45,7 +45,7 @@ const Topbar = () => {
     }
 
     // chat count
-    const {count} = useContext(AuthContext);
+    const {countMessage} = useContext(AuthContext);
   return (
     <div className="topbarContainer">
         <div className="topbarLeft">
@@ -83,7 +83,7 @@ const Topbar = () => {
                 </div>
                 <div className="topbarIconItem">
                     <ChatIcon onClick={handleMessenger} />
-                    <span className="topbarIconBadge">{count}</span>
+                    <span className="topbarIconBadge">{countMessage}</span>
                 </div>
                 <div className="topbarIconItem">
                     <NotificationsIcon />
