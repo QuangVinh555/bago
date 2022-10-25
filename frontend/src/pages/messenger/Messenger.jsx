@@ -21,12 +21,14 @@ const Messenger = () => {
   const [newMessages, setNewMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-
+  // console.log(currentChat);
+  // console.log(messages)
   useEffect(() => {})
   const {user} = useContext(AuthContext);
   const socket = useRef(io("ws://localhost:8900"))
+  const {countMessage, setCountMessage} = useContext(AuthContext);
+  console.log(countMessage)
   // socket
-  console.log("currentChat: ", currentChat?._id);
   useEffect(() => {
     socket.current.on("getMessage", data => {
       setArrivalMessage({
@@ -34,9 +36,16 @@ const Messenger = () => {
         text: data.text,
         createdAt: Date.now()
       })
-      // console.log(data);
+      setCountMessage(countMessage+1);
     })
-  },[])
+  },[arrivalMessage])
+
+  useEffect(() => {
+    if(currentChat){
+      setCountMessage(0);
+      console.log(currentChat);
+    }
+  }, [currentChat])
 
   useEffect(() => {
     arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && 
@@ -67,8 +76,7 @@ const Messenger = () => {
     getMessage();
   }, [user,currentChat])
 
-
-  const handleSubmit = async(e) => {
+    const handleSubmit = async(e) => {
     e.preventDefault();
     const message = {
       conversationId: currentChat._id,
@@ -76,10 +84,11 @@ const Messenger = () => {
       text: newMessages
     }
     const receiveId = currentChat.members.find(member => member !== user._id);
+    
     socket.current.emit("sendMessage",{
       senderId: user._id,
       receiveId: receiveId,
-      text: newMessages
+      text: newMessages,
     })
     try {
       const res = await axios.post(`http://localhost:8081/api/message/`, message);
@@ -108,7 +117,7 @@ const Messenger = () => {
                   {
                     conversations.map((c)=>(
                       <div key={c._id} onClick={() => setCurrentChat(c)} >
-                        <Conversation className={`${c._id === currentChat?._id ? 'hide' : ""}`} conversation={c} currentUser={user} currentChat={currentChat} messages={messages} />
+                        <Conversation className={`${c._id === currentChat?._id ? 'hide' : ""}`} conversation={c} currentUser={user} />
                       </div>
                     ))
                   }

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './Message.css';
 import {format} from 'timeago.js';
+import { AuthContext } from '../../context/AuthContext';
 
 const Message = ({message,own}) => {
 

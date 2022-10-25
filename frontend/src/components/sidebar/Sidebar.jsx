@@ -9,10 +9,21 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import EventIcon from '@mui/icons-material/Event';
 import SchoolIcon from '@mui/icons-material/School';
-import {Users} from '../../fakeData';
 import Closefriend from '../closefriend/Closefriend';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 
 const Sidebar = () => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const getUsers = async () => {
+      const res = await axios.get('http://localhost:8081/api/user/alluser');
+      setUsers(res.data);
+    }
+    getUsers();
+  }, [])
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -58,8 +69,8 @@ const Sidebar = () => {
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
           {
-            Users.map(user => (
-              <Closefriend key={user.id} user = {user}/>
+            users.map(user => (
+              <Closefriend key={user._id} user = {user}/>
             ))
           }
         </ul>

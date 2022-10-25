@@ -14,6 +14,8 @@ const Post = ({post}) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setLiked] = useState(false);
 
+  const {countLike, setCountLike} = useContext(AuthContext);
+
   const [user, setUser] = useState({});
   useEffect(()=> {
     const fetchingData = async () => {
@@ -35,6 +37,7 @@ const Post = ({post}) => {
       console.log(error);
     }
     setLike(isLiked ? like - 1 : like + 1);
+    setCountLike(countLike + 1);
     setLiked(!isLiked);
   }
 

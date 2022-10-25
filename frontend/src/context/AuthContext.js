@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {createContext, useEffect, useReducer} from 'react';
+import {createContext, useEffect, useReducer, useState} from 'react';
 import { LOCAL_STORAGE_TOKEN_NAME } from '../localStorage/localStorage';
 import {AuthReducer} from './AuthReducer';
 import setAuthToken from '../utils/setAuthToken'; 
@@ -44,12 +44,18 @@ const AuthContextProvider = ({children}) => {
         getUser();
     }, [])
 
+    const [countMessage, setCountMessage] = useState(0);
+    const [countLike, setCountLike] = useState(0);
 
     const AuthContextData = {
         user,
         isFetching,
         error,
-        dispatch
+        dispatch,
+        countMessage,
+        setCountMessage,
+        countLike,
+        setCountLike
     }
     return (
         <AuthContext.Provider value={AuthContextData}>

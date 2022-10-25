@@ -15,8 +15,9 @@ const Topbar = () => {
     const PK = process.env.REACT_APP_PUBLIC_FOLDER;
     const {user: currentUser, dispatch} = useContext(AuthContext);
     const [searchUser, setSearchUser] = useState("");
+    const {countLike} = useContext(AuthContext);
+
     // const [arraySearchUser, setArraySearchUser] = useState([])
-    
     useEffect(() => {
         const fetchingData = async () => {
             const res = await axios.get(`http://localhost:8081/api/user/alluser`);
@@ -42,6 +43,9 @@ const Topbar = () => {
     const handleMessenger = () => {
         return navigate('/messenger');
     }
+
+    // chat count
+    const {count} = useContext(AuthContext);
   return (
     <div className="topbarContainer">
         <div className="topbarLeft">
@@ -79,11 +83,11 @@ const Topbar = () => {
                 </div>
                 <div className="topbarIconItem">
                     <ChatIcon onClick={handleMessenger} />
-                    <span className="topbarIconBadge">2</span>
+                    <span className="topbarIconBadge">{count}</span>
                 </div>
                 <div className="topbarIconItem">
                     <NotificationsIcon />
-                    <span className="topbarIconBadge">1</span>
+                    <span className="topbarIconBadge">{countLike}</span>
                 </div>
             </div>
             <Link to = {`/profile/${currentUser.username}`} className="topbarRightProfile">

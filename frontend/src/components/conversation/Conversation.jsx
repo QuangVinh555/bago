@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import './Conversation.css';
 
-const Conversation = ({className, conversation, currentUser, messages, currentChat}) => {
+const Conversation = ({className, conversation, currentUser}) => {
   const PK = process.env.REACT_APP_PUBLIC_FOLDER;
   // console.log("Current Chat: ", currentChat?._id);
   const [user, setUser] = useState(null);
@@ -17,10 +17,6 @@ const Conversation = ({className, conversation, currentUser, messages, currentCh
     getUser();
   }, [conversation, currentUser]);
 
-    // const conversationElement = document.querySelectorAll('.conversation');
-    // for(let i = 0; i < conversationElement.length; i++) {
-    //   console.log(conversationElement[i]);
-    // }
 
   
   return (
