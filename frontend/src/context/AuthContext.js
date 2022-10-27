@@ -45,6 +45,7 @@ const AuthContextProvider = ({children}) => {
     }, [])
 
     const [countMessage, setCountMessage] = useState(0);
+
     const [countLike, setCountLike] = useState(0);
 
     const AuthContextData = {

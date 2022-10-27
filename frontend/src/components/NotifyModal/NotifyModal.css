@@ -1,0 +1,45 @@
+.notify-modal.hide{
+    display: none;
+}
+.notify-modal{
+    position: absolute;
+    width: 274px;
+    color: black;
+    left: -185px;
+    top: 39px;
+    z-index: 999;
+    background-color: rgb(228 224 224);
+}
+
+.notify-modal-like{
+    display: flex;
+    margin: 6px;
+    align-items: center;
+}
+
+.notify-modal-like img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.notify-modal-like h4{
+    margin: 0 4px;
+}
+
+.notify-modal-like p{
+    text-align: center;
+}
+
+.notify-modal::after{
+    content: "";
+    display: block;
+    position: absolute;
+    border-width: 17px 27px;
+    border-style: solid;
+    border-color: transparent transparent rgb(228 224 224) transparent;
+    top: -28px;
+    left: 170px;
+}
+

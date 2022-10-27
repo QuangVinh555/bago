@@ -25,6 +25,7 @@ io.on("connect", (socket) => {
     // add user
     socket.on("addUser", userId => {
         addUser(userId, socket.id);
+        console.log("user:",users)
         io.emit("getUsers", users);
     });
     // send messenger
@@ -32,9 +33,18 @@ io.on("connect", (socket) => {
         const user = getUser(receiveId);
         io.to(user?.socketId).emit("getMessage",{
             senderId,
-            text
+            text        
         }); 
+        console.log(user);
     });
+
+    // like
+    socket.on("like", ({senderId, receiveId}) => {
+        const user = getUser(receiveId);
+        socket.to(user?.socketId).emit("getNotify", {
+            senderId,
+        })
+    })
 
     // disconnect
     socket.on("disconnect", () => {

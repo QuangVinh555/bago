@@ -27,25 +27,26 @@ const Messenger = () => {
   const {user} = useContext(AuthContext);
   const socket = useRef(io("ws://localhost:8900"))
   const {countMessage, setCountMessage} = useContext(AuthContext);
-  console.log(countMessage)
-  // socket
-  useEffect(() => {
-    socket.current.on("getMessage", data => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now()
-      })
-      setCountMessage(countMessage+1);
-    })
-  },[arrivalMessage])
 
-  useEffect(() => {
-    if(currentChat){
-      setCountMessage(0);
-      console.log(currentChat);
-    }
-  }, [currentChat])
+  // socket
+  
+    socket.current.on("getMessage", data => {
+      console.log(data)
+      // setArrivalMessage({
+      //   sender: data.senderId,
+      //   text: data.text,
+      //   createdAt: Date.now()
+      // })
+      // setCountMessage(countMessage+1);
+      // console.log('aaa')
+    })
+ 
+
+  // useEffect(() => {
+  //     if(currentChat){
+  //       setCountMessage(0);
+  //     }
+  // }, [currentChat])
 
   useEffect(() => {
     arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && 
@@ -58,7 +59,7 @@ const Messenger = () => {
     socket.current.on("getUsers", users =>{
       setOnlineUsers(user?.followings.filter(f => users.some(u => u.userId === f)));
     })
-  }, [user])
+  }, [])
 
   useEffect(() => {
     const getConversation = async() => {

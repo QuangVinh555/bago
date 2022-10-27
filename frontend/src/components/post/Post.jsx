@@ -6,6 +6,8 @@ import axios from 'axios';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { useRef } from 'react';
+import {io} from 'socket.io-client'; 
 
 const Post = ({post}) => {
 
@@ -14,7 +16,7 @@ const Post = ({post}) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setLiked] = useState(false);
 
-  const {countLike, setCountLike} = useContext(AuthContext);
+  const socket = useRef(io("ws://localhost:8900"))
 
   const [user, setUser] = useState({});
   useEffect(()=> {
@@ -26,10 +28,12 @@ const Post = ({post}) => {
   }, [post.userId])
 
   const {user: currentUser} = useContext(AuthContext);
+
     useEffect(() => {
       setLiked(post.likes.includes(currentUser._id))
     }, [currentUser._id, post.likes] )
 
+  
   const handleLike = async () => {
     try {
       await axios.put(`http://localhost:8081/api/posts/${post._id}/like`, {userId: currentUser._id});
@@ -37,9 +41,14 @@ const Post = ({post}) => {
       console.log(error);
     }
     setLike(isLiked ? like - 1 : like + 1);
-    setCountLike(countLike + 1);
     setLiked(!isLiked);
-  }
+    if(!isLiked) {
+      socket.current.emit('like', {
+        senderId: currentUser._id,
+        receiveId: post.userId
+      })
+    }
+  } 
 
   return (
     <div className="post">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Topbar.css';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
@@ -10,12 +10,22 @@ import { AuthContext } from '../../context/AuthContext';
 import { useState } from 'react';
 import axios from 'axios';
 import { logoutCall } from '../../callApis';
+import NotifyModal from '../NotifyModal/NotifyModal';
 
-const Topbar = () => {
+const Topbar = ({socket}) => {
+    
     const PK = process.env.REACT_APP_PUBLIC_FOLDER;
     const {user: currentUser, dispatch} = useContext(AuthContext);
     const [searchUser, setSearchUser] = useState("");
-    const {countLike} = useContext(AuthContext);
+    const [notify, setNotify] = useState([]);
+    const {setCountLike} = useContext(AuthContext);
+
+    useEffect(() => {
+        socket?.on("getNotify", data => {
+            setNotify(prev=>[...prev, data.senderId]);
+            setCountLike(countLike + 1);
+        })
+    }, [socket, notify])
 
     // const [arraySearchUser, setArraySearchUser] = useState([])
     useEffect(() => {
@@ -45,7 +55,30 @@ const Topbar = () => {
     }
 
     // chat count
-    const {countMessage} = useContext(AuthContext);
+    const {countMessage, countLike} = useContext(AuthContext);
+    
+    const [isShow, setShow] = useState(false);
+    const handleNotifycations = () => {
+        setShow(!isShow);
+    }
+
+    
+    useEffect(() => {
+        const IconBadgeElement = document.querySelectorAll('.topbarIconBadge');
+        for(let i = 1; i < IconBadgeElement.length; i++){
+            if(countMessage===0){
+                IconBadgeElement[1]?.classList.add('none-color');
+            }
+            if(countLike===0){
+                IconBadgeElement[2]?.classList.add('none-color');
+            }
+            else{
+                IconBadgeElement[i].classList.remove('none-color');
+            }
+        }   
+        console.log(IconBadgeElement);
+    },[countMessage, countLike])
+
   return (
     <div className="topbarContainer">
         <div className="topbarLeft">
@@ -83,11 +116,17 @@ const Topbar = () => {
                 </div>
                 <div className="topbarIconItem">
                     <ChatIcon onClick={handleMessenger} />
-                    <span className="topbarIconBadge">{countMessage}</span>
+                    <span className="topbarIconBadge">{countMessage || ""}</span>
                 </div>
                 <div className="topbarIconItem">
-                    <NotificationsIcon />
-                    <span className="topbarIconBadge">{countLike}</span>
+                    <NotificationsIcon onClick={handleNotifycations} />
+                    <span className="topbarIconBadge">{countLike || ""}</span>
+                    {
+                        notify.map((userId,index) => (
+                            <NotifyModal key={index} show={isShow ? "" : "hide"} userId={userId} />
+                        ))
+
+                    }
                 </div>
             </div>
             <Link to = {`/profile/${currentUser.username}`} className="topbarRightProfile">
