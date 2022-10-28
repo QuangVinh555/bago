@@ -9,7 +9,6 @@ import Topbar from '../../components/topbar/Topbar';
 import { AuthContext } from '../../context/AuthContext';
 import './Messenger.css';
 
-import {io} from 'socket.io-client';
 
 const Messenger = () => {
 
@@ -21,32 +20,33 @@ const Messenger = () => {
   const [newMessages, setNewMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  // console.log(currentChat);
-  // console.log(messages)
+
   useEffect(() => {})
-  const {user} = useContext(AuthContext);
-  const socket = useRef(io("ws://localhost:8900"))
+  const {user, socket} = useContext(AuthContext);
+  
   const {countMessage, setCountMessage} = useContext(AuthContext);
 
   // socket
-  
-    socket.current.on("getMessage", data => {
-      console.log(data)
-      // setArrivalMessage({
-      //   sender: data.senderId,
-      //   text: data.text,
-      //   createdAt: Date.now()
-      // })
-      // setCountMessage(countMessage+1);
-      // console.log('aaa')
-    })
+    useEffect(() => {
+      
+      socket?.on("getMessage", data => {
+        console.log(data)
+        setArrivalMessage({
+          sender: data.senderId,
+          text: data.text,
+          createdAt: Date.now()
+        })
+        setCountMessage(countMessage+1);
+      })
+     
+    },[socket, arrivalMessage])  
  
 
-  // useEffect(() => {
-  //     if(currentChat){
-  //       setCountMessage(0);
-  //     }
-  // }, [currentChat])
+  useEffect(() => {
+      if(currentChat){
+        setCountMessage(0);
+      }
+  }, [currentChat])
 
   useEffect(() => {
     arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && 
@@ -55,8 +55,8 @@ const Messenger = () => {
   }, [arrivalMessage, currentChat])
 
   useEffect(() => {
-    socket.current.emit("addUser", user?._id);
-    socket.current.on("getUsers", users =>{
+    socket?.emit("addUser", user?._id);
+    socket?.on("getUsers", users =>{
       setOnlineUsers(user?.followings.filter(f => users.some(u => u.userId === f)));
     })
   }, [])
@@ -86,7 +86,7 @@ const Messenger = () => {
     }
     const receiveId = currentChat.members.find(member => member !== user._id);
     
-    socket.current.emit("sendMessage",{
+    socket.emit("sendMessage",{
       senderId: user._id,
       receiveId: receiveId,
       text: newMessages,

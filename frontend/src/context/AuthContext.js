@@ -3,6 +3,7 @@ import {createContext, useEffect, useReducer, useState} from 'react';
 import { LOCAL_STORAGE_TOKEN_NAME } from '../localStorage/localStorage';
 import {AuthReducer} from './AuthReducer';
 import setAuthToken from '../utils/setAuthToken'; 
+import {io} from 'socket.io-client';
 
 const INITIAL_STATE = {
     user: null,
@@ -44,6 +45,11 @@ const AuthContextProvider = ({children}) => {
         getUser();
     }, [])
 
+    const [socket, setSocket] = useState(null)
+    useEffect(() => {
+        setSocket(io("http://localhost:8900"))
+    }, [])
+
     const [countMessage, setCountMessage] = useState(0);
 
     const [countLike, setCountLike] = useState(0);
@@ -56,7 +62,9 @@ const AuthContextProvider = ({children}) => {
         countMessage,
         setCountMessage,
         countLike,
-        setCountLike
+        setCountLike,
+        socket,
+        setSocket
     }
     return (
         <AuthContext.Provider value={AuthContextData}>

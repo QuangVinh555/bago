@@ -6,15 +6,12 @@ import Rightbar from '../../components/rightbar/Rightbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import { AuthContext } from '../../context/AuthContext';
-import {io} from 'socket.io-client';
+
 import './Home.css'
 
 const Home = () => {
-  const {user} = useContext(AuthContext);  
-  const [socket, setSocket] = useState(null)
-  useEffect(() => {
-    setSocket(io("http://localhost:8900"))
-  }, [])
+  const {user, socket} = useContext(AuthContext);  
+
 
   useEffect(() => {
     socket?.emit("addUser", user?._id);

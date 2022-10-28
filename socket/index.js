@@ -41,7 +41,7 @@ io.on("connect", (socket) => {
     // like
     socket.on("like", ({senderId, receiveId}) => {
         const user = getUser(receiveId);
-        socket.to(user?.socketId).emit("getNotify", {
+        io.to(user?.socketId).emit("getNotify", {
             senderId,
         })
     })

@@ -23,7 +23,7 @@ const Chatonline = ({onlineUsers, currentUser, setCurrentChat, currentChat}) => 
       
       // conversation ? tim kiem : them cuoc hoi thoai conversation moi 
       const conversation = await axios.get(`http://localhost:8081/api/conversation/${userClick.data._id}`);
-      console.log(conversation.data)
+      
       
       const members = {
         senderId: currentUser,

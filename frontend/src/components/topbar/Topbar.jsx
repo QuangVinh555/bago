@@ -69,14 +69,17 @@ const Topbar = ({socket}) => {
             if(countMessage===0){
                 IconBadgeElement[1]?.classList.add('none-color');
             }
+            else{
+                IconBadgeElement[1].classList.remove('none-color');
+            }
             if(countLike===0){
                 IconBadgeElement[2]?.classList.add('none-color');
             }
             else{
-                IconBadgeElement[i].classList.remove('none-color');
+                IconBadgeElement[2].classList.remove('none-color');
             }
         }   
-        console.log(IconBadgeElement);
+        
     },[countMessage, countLike])
 
   return (
