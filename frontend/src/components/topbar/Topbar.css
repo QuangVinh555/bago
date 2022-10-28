@@ -208,3 +208,17 @@
 .none-color{
     background-color: transparent;
 }
+
+.none-notify{
+    position: absolute;
+    width: 200px;
+    height: 180px;
+    right: -58px;
+    top: 39px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    background-color: #cbd2d2;
+    color: black;
+
+}

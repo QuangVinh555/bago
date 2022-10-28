@@ -61,7 +61,7 @@ const Topbar = ({socket}) => {
     const handleNotifycations = () => {
         setShow(!isShow);
     }
-
+    console.log(isShow)
     
     useEffect(() => {
         const IconBadgeElement = document.querySelectorAll('.topbarIconBadge');
@@ -125,9 +125,13 @@ const Topbar = ({socket}) => {
                     <NotificationsIcon onClick={handleNotifycations} />
                     <span className="topbarIconBadge">{countLike || ""}</span>
                     {
-                        notify.map((userId,index) => (
-                            <NotifyModal key={index} show={isShow ? "" : "hide"} userId={userId} />
-                        ))
+                        notify.length > 0 ? (
+                            notify.map((userId,index) => (
+                                <NotifyModal key={index} show={isShow ? "" : "hide"} userId={userId} setCountLike={setCountLike} />
+                            ))
+                        )
+                        :
+                        isShow && <div className="none-notify">Không có thông báo nào ở đây!</div>
 
                     }
                 </div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './NotifyModal.css';
 
-const NotifyModal = ({show, userId}) => {
+const NotifyModal = ({show, userId, setCountLike}) => {
     
     const PK = process.env.REACT_APP_PUBLIC_FOLDER;
     const [notification, setNotification] = useState([])
@@ -14,7 +14,9 @@ const NotifyModal = ({show, userId}) => {
             getNotify();
         }, [userId])
     
-        console.log(notification);
+        if(!show){
+            setCountLike(0);
+        }
   return (
         <>
             {
