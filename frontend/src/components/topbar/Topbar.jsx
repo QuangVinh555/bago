@@ -127,7 +127,7 @@ const Topbar = ({socket}) => {
                     {
                         notify.length > 0 ? (
                             notify.map((userId,index) => (
-                                <NotifyModal key={index} show={isShow ? "" : "hide"} userId={userId} setCountLike={setCountLike} />
+                                <NotifyModal key={index} show={isShow ? "" : "hide"} userId={userId} setCountLike={setCountLike}/>
                             ))
                         )
                         :

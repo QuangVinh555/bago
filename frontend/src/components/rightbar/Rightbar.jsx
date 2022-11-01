@@ -42,7 +42,9 @@ const Rightbar = ({userId}) => {
       fetchingData();
     }, [userId._id])
 
-    const [follower, setFollower] = useState(false);
+    const [follower, setFollower] = useState(
+      user.followings.includes(userId?.id)
+    );
     useEffect(() => {
       setFollower(user.followings.includes(userId?._id));
     }, [user,userId._id])
@@ -51,11 +53,11 @@ const Rightbar = ({userId}) => {
       try {
         if(follower){
           await axios.put(`http://localhost:8081/api/user/${userId._id}/unfollow`, {userId: user._id});
-          dispatch({type: "UNFOLLOW", payload: user._id})
+          dispatch({type: "UNFOLLOW", payload: userId._id})
         }
         else{
           await axios.put(`http://localhost:8081/api/user/${userId._id}/follow`, {userId: user._id});
-          dispatch({type: "FOLLOW", payload: user._id})
+          dispatch({type: "FOLLOW", payload: userId._id})
         }
       } catch (error) {
         console.log(error);
@@ -78,7 +80,8 @@ const Rightbar = ({userId}) => {
           <button 
             className="btnRightbarFollow" 
             style={{marginTop: "30px", marginBottom: "20px"}} 
-            onClick={handleFollow}>
+            onClick={handleFollow}
+          >
             {follower ? 'UnFollow' : 'Follow'}
             {follower ? <RemoveIcon />  : <AddIcon />} 
           </button>
