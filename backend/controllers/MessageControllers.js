@@ -18,6 +18,15 @@ const MessageControllers = {
             return res.status(500).json(error);
         }
     },
+    // [DELETE] /api/message/:id
+    deleteMessage: async (req, res) => {
+        try {
+            await Message.findByIdAndDelete(req.params.id);
+            return res.status(200).json("Xóa tin nhắn của bạn thành công");
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
     //[GET] /api/message/:conversationId
     getMessage: async (req, res) => {
         try {

@@ -23,7 +23,6 @@ const Messenger = () => {
 
   useEffect(() => {})
   const {user, socket} = useContext(AuthContext);
-  
   const {countMessage, setCountMessage} = useContext(AuthContext);
 
   // socket
@@ -133,7 +132,7 @@ const Messenger = () => {
                         {
                           messages.map(message => (
                             <div key={message._id} ref = {scrollRef}>
-                              <Message message={message} own={message.sender === user._id} /> 
+                              <Message message={message} own={message.sender === user._id} currentUser={user} /> 
                             </div>             
                           ))
                         }

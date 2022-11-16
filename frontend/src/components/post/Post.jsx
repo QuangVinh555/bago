@@ -50,6 +50,24 @@ const Post = ({post}) => {
     }
   } 
 
+  // 3 cham
+  const [movert, setMovert] = useState(false);
+  // post id
+  const handlePost = async(post) => {
+    try { 
+      if(post.userId === currentUser._id){
+        await axios.delete(`http://localhost:8081/api/posts/${post._id}`);
+        alert('Bạn xóa bài viết thành công');
+        window.location.reload();
+      }else{
+        alert('Bạn không thể xóa bài viết của người khác');
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="post">
         <div className="postWrapper">
@@ -62,7 +80,12 @@ const Post = ({post}) => {
               <span className="postDate">{format(post.createdAt)}</span>
             </div>
             <div className="postTopRight">
-              <MoreVertIcon />
+              <MoreVertIcon className="postMovertIcon" onClick={()=>setMovert(!movert)} />
+              {
+                movert && <div className="post-delete">
+                  <h4 onClick={()=>handlePost(post)}>Xóa bài viết</h4>
+                </div>
+              }
             </div>
           </div>
           <div className="postCenter">

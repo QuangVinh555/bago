@@ -38,3 +38,9 @@
     background-color: rgb(245,241,241);
     color: black;
 }
+
+/* isMes */
+.messageTop h4{
+    cursor: pointer;
+    margin: 0 8px;
+}
